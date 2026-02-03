@@ -15,6 +15,6 @@ void UAnimBase::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 	if (!Owner || !OwnerMovement) return;
-	GroundSpeed = Owner->GetVelocity().Size2D();
-	bIsInAir = OwnerMovement->IsFalling();
+	GroundSpeed = Owner->GetVelocity().Size2D(); 
+ 	bIsInAir = OwnerMovement->IsFalling();
 }
