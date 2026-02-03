@@ -4,6 +4,9 @@
 #include "AuraCharacterBase.h"
 #include "AuraCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class AURA_API AAuraCharacter : public AAuraCharacterBase
 {
@@ -11,12 +14,17 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
+	
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
 	virtual void BeginPlay() override;
 
-public:
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+private:
+	UPROPERTY(EditAnywhere,Category="Camera")
+	TObjectPtr<USpringArmComponent> CameraBoom{};
+	UPROPERTY(EditAnywhere,Category="Camera")
+	TObjectPtr<UCameraComponent> Camera{};
 };

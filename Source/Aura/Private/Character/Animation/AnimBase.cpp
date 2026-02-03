@@ -17,4 +17,5 @@ void UAnimBase::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 	if (!Owner || !OwnerMovement) return;
 	GroundSpeed = Owner->GetVelocity().Size2D(); 
  	bIsInAir = OwnerMovement->IsFalling();
+	bShouldMove = GroundSpeed > 3.f;
 }

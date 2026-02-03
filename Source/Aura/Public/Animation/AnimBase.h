@@ -26,4 +26,6 @@ protected:
 	float GroundSpeed{};
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Category="Animation")
 	bool bIsInAir{};
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Category="Animation")
+	bool bShouldMove{};
 };
