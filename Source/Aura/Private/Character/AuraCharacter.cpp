@@ -1,8 +1,10 @@
 ﻿#include "Character/AuraCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/AuraPlayerState.h"
 
 
 AAuraCharacter::AAuraCharacter()
@@ -37,17 +39,23 @@ AAuraCharacter::AAuraCharacter()
 	GetCharacterMovement()->BrakingDecelerationFlying = 2000.f;
 }
 
-void AAuraCharacter::BeginPlay()
+void AAuraCharacter::PossessedBy(AController* NewController)
 {
-	Super::BeginPlay();
+	Super::PossessedBy(NewController);
+	InitAbilityActorInfo();
 }
 
-void AAuraCharacter::Tick(float DeltaTime)
+void AAuraCharacter::OnRep_PlayerState()
 {
-	Super::Tick(DeltaTime);
+	Super::OnRep_PlayerState();
+	InitAbilityActorInfo();
 }
 
-void AAuraCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AAuraCharacter::InitAbilityActorInfo()
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	AAuraPlayerState* const& AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+	AttributeSet = AuraPlayerState->GetAttributeSet();
 }

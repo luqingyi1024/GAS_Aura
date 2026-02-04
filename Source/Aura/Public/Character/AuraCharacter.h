@@ -14,17 +14,16 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
-	
-	virtual void Tick(float DeltaTime) override;
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void PossessedBy(AController* NewController) override;
 
-protected:
-	virtual void BeginPlay() override;
+	virtual void OnRep_PlayerState() override;
 
 private:
 	UPROPERTY(EditAnywhere,Category="Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom{};
 	UPROPERTY(EditAnywhere,Category="Camera")
 	TObjectPtr<UCameraComponent> Camera{};
+	
+	void InitAbilityActorInfo();
 };
