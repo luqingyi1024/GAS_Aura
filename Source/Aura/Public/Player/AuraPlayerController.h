@@ -40,6 +40,6 @@ private:
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"), Category="Input")
 	// TObjectPtr<UInputAction> LookAction{};
 #pragma endregion
-	IEnemyInterface* LastActor{};
-	IEnemyInterface* ThisActor{};
+	TWeakInterfacePtr<IEnemyInterface> LastActor{};
+	TWeakInterfacePtr<IEnemyInterface> ThisActor{};
 };

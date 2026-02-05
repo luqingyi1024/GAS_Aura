@@ -4,7 +4,9 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
+#include "UI/HUD/AuraHUD.h"
 
 
 AAuraCharacter::AAuraCharacter()
@@ -17,7 +19,7 @@ AAuraCharacter::AAuraCharacter()
 	CameraBoom->SetupAttachment(GetRootComponent());
 	CameraBoom->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
 	CameraBoom->TargetArmLength = 650.f;
-	CameraBoom->bEnableCameraLag = true; 
+	CameraBoom->bEnableCameraLag = true;
 	CameraBoom->bUsePawnControlRotation = false;
 	CameraBoom->bInheritPitch = false;
 	CameraBoom->bInheritYaw = false;
@@ -26,7 +28,7 @@ AAuraCharacter::AAuraCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	Camera->bUsePawnControlRotation = false;
-	
+
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
@@ -58,4 +60,11 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+	if (AAuraPlayerController* const& AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
+		{
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}  
+	}
 }
